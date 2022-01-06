@@ -168,6 +168,8 @@
             </div>
             <div class="col-md-6"></div>
         </div>
+        <a href="/searches "class="badge-secondary p-1"> SEARCH PATIENT</a>
+        <a href="/settings "class="badge-secondary p-1">SETTINGS</a>
         <button class="badge badge-primary text-wrap" type="submit">SUBMIT</button>
     </form>
         <?php flash('post_message'); ?>

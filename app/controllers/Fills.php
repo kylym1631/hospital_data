@@ -170,10 +170,7 @@ class Fills extends Controller {
             }else{
                 $data['doctor'] = trim($_POST['doctor']);
             }
-//            echo '<pre>';
-//            print_r($data);
-//            echo '</pre>';
-//            die();
+
 
 
 

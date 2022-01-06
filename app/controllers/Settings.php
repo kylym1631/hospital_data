@@ -136,7 +136,7 @@ class Settings extends Controller {
 
 
 
-                flash('post_message', 'Person Added!');
+                flash('post_message', 'Data saved!');
                 header( "refresh:1;url=index" );
 
             } else {

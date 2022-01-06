@@ -8,7 +8,7 @@
                     ID OF PATIENT
                 </div>
                 <div class="text-secondary">
-                    55461
+                    <?=$data['id_patient']?>
                 </div>
             </div>
 
@@ -20,7 +20,8 @@
                     PATIENT NAME
                 </div>
                 <div class="text-secondary">
-                    MARIUSZ
+                    <?=$data['name']?>
+
                 </div>
             </div>
         </div>
@@ -30,7 +31,8 @@
                     PATIENT SURNAME
                 </div>
                 <div class="text-secondary">
-                    LEWANDOWSKI
+                    <?=$data['surname']?>
+
                 </div>
             </div>
         </div>
@@ -40,7 +42,8 @@
                     PESEL
                 </div>
                 <div class="text-secondary">
-                    43957647586
+                    <?=$data['pesel']?>
+
                 </div>
             </div>
         </div>
@@ -50,7 +53,7 @@
                     INSURANCE
                 </div>
                 <div class="text-secondary">
-                    -
+                    <?=$data['insurance_name']?>
                 </div>
             </div>
         </div>
@@ -60,7 +63,7 @@
                     TYPE OF MED SERVICE
                 </div>
                 <div class="text-secondary">
-                    MRI
+                    <?=$data['service_type']?>
                 </div>
             </div>
         </div>
@@ -70,7 +73,8 @@
                     DISEASE
                 </div>
                 <div class="text-secondary">
-                    CANCER
+                    <?=$data['disease_name']?>
+
                 </div>
             </div>
         </div>
@@ -80,7 +84,8 @@
                     DEPARTMENT
                 </div>
                 <div class="text-secondary">
-                    ONCOLOGY
+                    <?=$data['department']?>
+
                 </div>
             </div>
         </div>
@@ -90,7 +95,7 @@
                     CHAMBER
                 </div>
                 <div class="text-secondary">
-                    CENTRAL CHAMBER
+                    <?=$data['n_of_chamber']?>
                 </div>
             </div>
         </div>
@@ -100,7 +105,7 @@
                     BERTH
                 </div>
                 <div class="text-secondary">
-                    2
+                    <?=$data['n_of_berth']?>
                 </div>
             </div>
         </div>
@@ -110,7 +115,7 @@
                     COUNTRY
                 </div>
                 <div class="text-secondary">
-                    POLAND
+                    <?=$data['name_of_country']?>
                 </div>
             </div>
         </div>
@@ -120,7 +125,7 @@
                     GENDER
                 </div>
                 <div class="text-secondary">
-                    MALE
+                    <?=$data['gender_name']?>
                 </div>
             </div>
         </div>
@@ -130,7 +135,7 @@
                     EMAIL
                 </div>
                 <div class="text-secondary">
-                    mariu1234@gmail.com
+                    <?=$data['email']?>
                 </div>
             </div>
         </div>
@@ -143,9 +148,11 @@
                     <div>
 
                         <div class="text-secondary">
-                            22-471 <br>
-                            Warsaw <br>
-                            Stoklosy
+                            <?=$data['zip_code']?>
+                            <br>
+                            <?=$data['city']?>
+                            <br>
+                            <?=$data['street']?>
 
                         </div>
                     </div>
@@ -159,7 +166,7 @@
                     PHONE
                 </div>
                 <div class="text-secondary">
-                    +48 510 - 879 - 384
+                    <?=$data['phone_number']?>
                 </div>
             </div>
         </div>
@@ -169,7 +176,7 @@
                     ARRIVAL TIME
                 </div>
                 <div class="text-secondary">
-                    TUESDAY, 16 NOV, 14:05:29
+                    <?=$data['arrival_time']?>
                 </div>
             </div>
         </div>
@@ -179,7 +186,7 @@
                     CHECKED OUT
                 </div>
                 <div class="text-secondary">
-                    FRIDAY, 19 NOV, 12:05:29
+                    <?=$data['date_checked_out']?>
                 </div>
             </div>
         </div>
@@ -189,7 +196,7 @@
                     INDICATION
                 </div>
                 <div class="text-secondary">
-                    -
+                    <?=$data['indication']?>
                 </div>
             </div>
         </div>
@@ -200,13 +207,21 @@
                 </div>
                 <div class="text-secondary">
                     <div>
-                        JAMES STONE
+                        <?php
+                        if (!empty($data['id_doctor']))
+                        {
+                            echo $data[0][0]->doctor_name . ' ' . $data[0][0]->doctor_surname;
+                        }
+                        ?>
                     </div>
                     <div>
-                        ONCOLOGIST
-                    </div>
-                    <div>
-                        ONCOLOGY
+                        <?php
+                        if (!empty($data['id_doctor']))
+                        {
+                            echo $data[0][0]->specialization_name;
+                        }
+                        ?>
+
                     </div>
                 </div>
             </div>

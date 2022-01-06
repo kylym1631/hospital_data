@@ -80,8 +80,9 @@
                                 </span>
                         </div>
                         </div>
-
-                <button class="badge-primary text-wrap">CHANGE</button>
+                <a href="/fills" class="badge-secondary p-1"> ADD PATIENT</a>
+                <a href="/searches "class="badge-secondary p-1"> SEARCH PATIENT</a>
+                <button class="badge-primary text-wrap">SAVE</button>
 
             </form>
         <?php flash('post_message'); ?>
