@@ -102,7 +102,7 @@ class Fills extends Controller {
                 $data['street'] = trim($_POST['street']);
             }
             if (!empty(($_POST['phone'])) && strlen($_POST['phone']) < 11){
-                $data['zip_code'] = trim($_POST['zip_code']);
+                $data['phone'] = trim($_POST['phone']);
             }
             if(strlen($_POST['phone']) > 10){
                 $data['phone_err'] = 'Maximum character for phone is 10';

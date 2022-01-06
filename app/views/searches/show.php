@@ -166,6 +166,7 @@
                     PHONE
                 </div>
                 <div class="text-secondary">
+<!--                    --><?php //var_dump($data);?>
                     <?=$data['phone_number']?>
                 </div>
             </div>
