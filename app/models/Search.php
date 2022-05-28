@@ -159,7 +159,7 @@ LEFT join department on patient.id_patient = department.id_patient
         }
         if (!empty($data['disease']))
         {
-            $this->db->bind(':disease', $data['disease']);
+            $this->db->bind(':disease_name', $data['disease']);
         }
         if (!empty($data['chamber']))
         {

@@ -19,7 +19,7 @@
                             <?php
                             foreach($data['diseases'] as $disease)
                             {
-                                echo '<option value="'. $disease->name.'"';
+                                echo '<option value="'. $disease->id_disease.'"';
                                 if (!empty($_POST['disease']) && $disease->name == $_POST['disease'])
                                 {
                                     echo 'selected';

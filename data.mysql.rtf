@@ -1,0 +1,458 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 ArialMT;}
+{\colortbl;\red255\green255\blue255;\red226\green229\blue232;\red24\green25\blue27;}
+{\*\expandedcolortbl;;\cssrgb\c90980\c91765\c92941;\cssrgb\c12549\c12941\c14118;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 create table gender(\
+    id_gender INT not null auto_increment,\
+    name VARCHAR(15) NULL,\
+    primary KEY (id_gender)\
+);\
+\
+insert into gender(name) VALUES('male');\
+insert into gender(name) VALUES('female');\
+insert into gender(name) VALUES('not specified');\
+\
+\
+\
+use testask4;\
+create table person(\
+    id_person INT not null auto_increment,\
+    name VARCHAR(255) NULL,\
+    surname VARCHAR(40) NULL,\
+    id_gender int,\
+    FOREIGN KEY (id_gender) REFERENCES gender(id_gender),\
+    primary KEY (id_person)\
+);\
+\
+use testask4;\
+CREATE table country(\
+	id_country int not null auto_increment,\
+	code_of_country int,\
+	name_of_country VARCHAR(50),\
+	PRIMARY KEY(id_country)\
+);\
+ALTER TABLE testask4.person\
+  ADD COLUMN id_country INT,\
+  ADD FOREIGN KEY (id_country) REFERENCES country(id_country) ON DELETE CASCADE;\
+\
+\
+use testask4;\
+create table address(\
+    id_address INT not null auto_increment,\
+    name1 VARCHAR(20) NULL,\
+    id_person int NOT NULL,\
+    zip_code CHAR(6) NULL,\
+    city VARCHAR(40) NULL,\
+    street VARCHAR(40) NULL,\
+    FOREIGN KEY (id_person)  REFERENCES person(id_person),\
+    primary KEY (id_address)\
+\
+);\
+\
+ALTER TABLE address\
+DROP COLUMN name1;\
+\
+\
+use testask4;\
+create table email(\
+    id_mail INT not null auto_increment,\
+    email VARCHAR(100) NULL,\
+    id_person int NOT NULL,\
+    FOREIGN KEY (id_person)  REFERENCES person(id_person),\
+    primary KEY (id_mail)\
+\
+);\
+\
+\
+use testask4;\
+create table patient(\
+    id_patient INT not null auto_increment,\
+    pesel CHAR(11) NULL,\
+    id_person int NOT NULL,\
+    id_insurance int null,\
+    FOREIGN KEY (id_person)  REFERENCES person(id_person),\
+    primary KEY (id_patient)\
+\
+);\
+\
+use testask4;\
+create table insurance(\
+    id_insurance INT not null auto_increment,\
+    name CHAR(40) NULL,\
+    id_patient int NOT NULL,\
+    FOREIGN KEY (id_patient)  REFERENCES patient(id_patient),\
+    primary KEY (id_insurance)\
+\
+);\
+\
+use testask4;\
+create table type_of_medical_service(\
+    id_toms INT not null auto_increment,\
+    name varchar(20) NULL,\
+    id_patient int NOT NULL,\
+    FOREIGN KEY (id_patient)  REFERENCES patient(id_patient),\
+    primary KEY (id_toms)\
+\
+);\
+\
+\
+use testask4;\
+create table disease(\
+    id_disease INT not null auto_increment,\
+    name varchar(15) NULL,\
+    period_of_disease CHAR(20) null,\
+    term_of_disease_treatment date null,\
+    toms int null,\
+    id_patient int NOT NULL, \
+    FOREIGN KEY (id_patient)  REFERENCES patient(id_patient),\
+    primary KEY (id_disease)\
+\
+);\
+\
+use testask4;\
+ALTER TABLE disease RENAME COLUMN term_of_disease_treatment TO disease_treatment_start;\
+ALTER TABLE disease\
+ADD COLUMN disease_treatment_end date AFTER disease_treatment_start;\
+\
+use testask4;\
+create table department(\
+    id_department INT not null auto_increment,\
+    department varchar(15) NULL,\
+    id_patient int NOT NULL,\
+    FOREIGN KEY (id_patient)  REFERENCES patient(id_patient),\
+    primary KEY (id_department)\
+\
+);\
+\
+use testask4;\
+create table chamber(\
+    id_chamber INT not null auto_increment,\
+    n_of_chamber int NULL,\
+    id_patient int NOT NULL,\
+    FOREIGN KEY (id_patient)  REFERENCES patient(id_patient),\
+    primary KEY (id_chamber)\
+\
+);\
+\
+\
+\
+use testask4;\
+create table berth(\
+    id_berth INT not null auto_increment,\
+    n_of_berth int NULL,\
+    id_chamber int NOT NULL,\
+    FOREIGN KEY (id_chamber)  REFERENCES chamber(id_chamber),\
+    primary KEY (id_berth)\
+\
+);\
+\
+\
+use testask4;\
+create table specialization(\
+    id_specialization INT not null auto_increment,\
+    name varchar(20) null,\
+    primary KEY (id_specialization)\
+\
+);\
+\
+INSERT INTO specialization (name) VALUES ('THERAUPUTICS');\
+INSERT INTO specialization (name) VALUES ('CARDIOVASCULAR');\
+INSERT INTO specialization (name) VALUES ('ONCOLOGY');\
+INSERT INTO specialization (name) VALUES ('SURGERY');\
+INSERT INTO specialization (name) VALUES ('GASTREONTOLOGY');\
+INSERT INTO specialization (name) VALUES ('DERMATOLOGY');\
+INSERT INTO specialization (name) VALUES ('DIAGNOSTICS');\
+INSERT INTO specialization (name) VALUES ('NEUROSURGERY');\
+\
+\
+\
+\
+use testask4;\
+create table doctor(\
+    id_doctor INT not null auto_increment,\
+    id_person int NOT NULL,\
+    id_specialization int NOT NULL,\
+    FOREIGN KEY (id_person)  REFERENCES person(id_person),\
+    FOREIGN KEY (id_specialization)  REFERENCES specialization(id_specialization),\
+    primary KEY (id_doctor)\
+\
+);\
+\
+\
+use testask4;\
+create table patient_history(\
+    id_patient_history INT not null auto_increment,\
+    arrival_time date NULL,\
+    date_checked_out date NULL,\
+    indication VARCHAR(100) NULL,\
+    id_patient int NOT NULL,\
+    id_doctor int NOT NULL,\
+    FOREIGN KEY (id_patient)  REFERENCES patient(id_patient),\
+    FOREIGN KEY (id_doctor)  REFERENCES doctor(id_doctor),\
+    primary KEY (id_patient_history)\
+\
+);\
+\
+\
+use testask4;\
+create table phone(\
+    id_phone INT not null auto_increment,\
+    phone_number char(10),\
+    id_person int NOT NULL,\
+    FOREIGN KEY (id_person)  REFERENCES person(id_person),\
+    primary KEY (id_phone)\
+\
+);\
+\
+\
+INSERT into country(code_of_country,name_of_country) VALUES\
+        ('247', 'Ascension Island'),\
+        ('376', 'Andorra'),\
+        ('971', 'United Arab Emirates'),\
+        ('93', 'Afghanistan'),\
+        ('1', 'Antigua and Barbuda'),\
+        ('1', 'Anguilla'),\
+        ('355', 'Albania'),\
+        ('374', 'Armenia'),\
+        ('244', 'Angola'),\
+        ('54', 'Argentina'),\
+        ('1', 'American Samoa'),\
+        ('43', 'Austria'),\
+        ('61', 'Australia'),\
+        ('297', 'Aruba'),\
+        ('358', '\'c5land Islands'),\
+        ('994', 'Azerbaijan'),\
+        ('387', 'Bosnia and Herzegovina'),\
+        ('1', 'Barbados'),\
+        ('880', 'Bangladesh'),\
+        ('32', 'Belgium'),\
+        ('226', 'Burkina Faso'),\
+        ('359', 'Bulgaria'),\
+        ('973', 'Bahrain'),\
+        ('257', 'Burundi'),\
+        ('229', 'Benin'),\
+        ('590', 'Saint Barth\'e9lemy'),\
+        ('1', 'Bermuda'),\
+        ('673', 'Brunei'),\
+        ('591', 'Bolivia'),\
+        ('599', 'Bonaire, Sint Eustatius and Saba'),\
+        ('55', 'Brazil'),\
+        ('1', 'Bahamas'),\
+        ('975', 'Bhutan'),\
+        ('267', 'Botswana'),\
+        ('375', 'Belarus'),\
+        ('501', 'Belize'),\
+        ('1', 'Canada'),\
+        ('61', 'Cocos Islands'),\
+        ('243', 'The Democratic Republic Of Congo'),\
+        ('236', 'Central African Republic'),\
+        ('242', 'Congo'),\
+        ('41', 'Switzerland'),\
+        ('225', 'C\'f4te d Ivoire'),\
+        ('682', 'Cook Islands'),\
+        ('56', 'Chile'),\
+        ('237', 'Cameroon'),\
+        ('86', 'China'),\
+        ('57', 'Colombia'),\
+        ('506', 'Costa Rica'),\
+        ('53', 'Cuba'),\
+        ('238', 'Cape Verde'),\
+        ('599', 'Cura\'e7ao'),\
+        ('61', 'Christmas Island'),\
+        ('357', 'Cyprus'),\
+        ('420', 'Czech Republic'),\
+        ('49', 'Germany'),\
+        ('253', 'Djibouti'),\
+        ('45', 'Denmark'),\
+        ('1', 'Dominica'),\
+        ('1', 'Dominican Republic'),\
+        ('213', 'Algeria'),\
+        ('593', 'Ecuador'),\
+        ('372', 'Estonia'),\
+        ('20', 'Egypt'),\
+        ('212', 'Western Sahara'),\
+        ('291', 'Eritrea'),\
+        ('34', 'Spain'),\
+        ('251', 'Ethiopia'),\
+        ('358', 'Finland'),\
+        ('679', 'Fiji'),\
+        ('500', 'Falkland Islands'),\
+        ('691', 'Micronesia'),\
+        ('298', 'Faroe Islands'),\
+        ('33', 'France'),\
+        ('241', 'Gabon'),\
+        ('44', 'United Kingdom'),\
+        ('1', 'Grenada'),\
+        ('995', 'Georgia'),\
+        ('594', 'French Guiana'),\
+        ('44', 'Guernsey'),\
+        ('233', 'Ghana'),\
+        ('350', 'Gibraltar'),\
+        ('299', 'Greenland'),\
+        ('220', 'Gambia'),\
+        ('224', 'Guinea'),\
+        ('590', 'Guadeloupe'),\
+        ('240', 'Equatorial Guinea'),\
+        ('30', 'Greece'),\
+        ('502', 'Guatemala'),\
+        ('1', 'Guam'),\
+        ('245', 'Guinea-Bissau'),\
+        ('592', 'Guyana'),\
+        ('852', 'Hong Kong'),\
+        ('504', 'Honduras'),\
+        ('385', 'Croatia'),\
+        ('509', 'Haiti'),\
+        ('36', 'Hungary'),\
+        ('62', 'Indonesia'),\
+        ('353', 'Ireland'),\
+        ('972', 'Israel'),\
+        ('44', 'Isle Of Man'),\
+        ('91', 'India'),\
+        ('246', 'British Indian Ocean Territory'),\
+        ('964', 'Iraq'),\
+        ('98', 'Iran'),\
+        ('354', 'Iceland'),\
+        ('39', 'Italy'),\
+        ('44', 'Jersey'),\
+        ('1', 'Jamaica'),\
+        ('962', 'Jordan'),\
+        ('81', 'Japan'),\
+        ('254', 'Kenya'),\
+        ('996', 'Kyrgyzstan'),\
+        ('855', 'Cambodia'),\
+        ('686', 'Kiribati'),\
+        ('269', 'Comoros'),\
+        ('1', 'Saint Kitts And Nevis'),\
+        ('850', 'North Korea'),\
+        ('82', 'South Korea'),\
+        ('965', 'Kuwait'),\
+        ('1', 'Cayman Islands'),\
+        ('7', 'Kazakhstan'),\
+        ('856', 'Laos'),\
+        ('961', 'Lebanon'),\
+        ('1', 'Saint Lucia'),\
+        ('423', 'Liechtenstein'),\
+        ('94', 'Sri Lanka'),\
+        ('231', 'Liberia'),\
+        ('266', 'Lesotho'),\
+        ('370', 'Lithuania'),\
+        ('352', 'Luxembourg'),\
+        ('371', 'Latvia'),\
+        ('218', 'Libya'),\
+        ('212', 'Morocco'),\
+        ('377', 'Monaco'),\
+        ('373', 'Moldova'),\
+        ('382', 'Montenegro'),\
+        ('590', 'Saint Martin'),\
+        ('261', 'Madagascar'),\
+        ('692', 'Marshall Islands'),\
+        ('389', 'Macedonia'),\
+        ('223', 'Mali'),\
+        ('95', 'Myanmar'),\
+        ('976', 'Mongolia'),\
+        ('853', 'Macao'),\
+        ('1', 'Northern Mariana Islands'),\
+        ('596', 'Martinique'),\
+        ('222', 'Mauritania'),\
+        ('1', 'Montserrat'),\
+        ('356', 'Malta'),\
+        ('230', 'Mauritius'),\
+        ('960', 'Maldives'),\
+        ('265', 'Malawi'),\
+        ('52', 'Mexico'),\
+        ('60', 'Malaysia'),\
+        ('258', 'Mozambique'),\
+        ('264', 'Namibia'),\
+        ('687', 'New Caledonia'),\
+        ('227', 'Niger'),\
+        ('672', 'Norfolk Island'),\
+        ('234', 'Nigeria'),\
+        ('505', 'Nicaragua'),\
+        ('31', 'Netherlands'),\
+        ('47', 'Norway'),\
+        ('977', 'Nepal'),\
+        ('674', 'Nauru'),\
+        ('683', 'Niue'),\
+        ('64', 'New Zealand'),\
+        ('968', 'Oman'),\
+        ('507', 'Panama'),\
+        ('51', 'Peru'),\
+        ('689', 'French Polynesia'),\
+        ('675', 'Papua New Guinea'),\
+        ('63', 'Philippines'),\
+        ('92', 'Pakistan'),\
+        ('48', 'Poland'),\
+        ('508', 'Saint Pierre And Miquelon'),\
+        ('1', 'Puerto Rico'),\
+        ('970', 'Palestine'),\
+        ('351', 'Portugal'),\
+        ('680', 'Palau'),\
+        ('595', 'Paraguay'),\
+        ('974', 'Qatar'),\
+        ('262', 'Reunion'),\
+        ('40', 'Romania'),\
+        ('381', 'Serbia'),\
+        ('7', 'Russia'),\
+        ('250', 'Rwanda'),\
+        ('966', 'Saudi Arabia'),\
+        ('677', 'Solomon Islands'),\
+        ('248', 'Seychelles'),\
+        ('249', 'Sudan'),\
+        ('46', 'Sweden'),\
+        ('65', 'Singapore'),\
+        ('290', 'Saint Helena'),\
+        ('386', 'Slovenia'),\
+        ('47', 'Svalbard And Jan Mayen'),\
+        ('421', 'Slovakia'),\
+        ('232', 'Sierra Leone'),\
+        ('378', 'San Marino'),\
+        ('221', 'Senegal'),\
+        ('252', 'Somalia'),\
+        ('597', 'Suriname'),\
+        ('211', 'South Sudan'),\
+        ('239', 'Sao Tome And Principe'),\
+        ('503', 'El Salvador'),\
+        ('1', 'Sint Maarten (Dutch part)'),\
+        ('963', 'Syria'),\
+        ('268', 'Swaziland'),\
+        ('290', 'Tristan da Cunha'),\
+        ( '1', 'Turks And Caicos Islands'),\
+        ( '235', 'Chad'),\
+        ( '228', 'Togo'),\
+        ( '66', 'Thailand'),\
+        ( '992', 'Tajikistan'),\
+        ( '690', 'Tokelau'),\
+        ( '670', 'Timor-Leste'),\
+        ( '993', 'Turkmenistan'),\
+        ( '216', 'Tunisia'),\
+        ( '676', 'Tonga'),\
+        ( '90', 'Turkey'),\
+        ( '1', 'Trinidad and Tobago'),\
+        ( '688', 'Tuvalu'),\
+        ( '886', 'Taiwan'),\
+        ( '255', 'Tanzania'),\
+        ( '380', 'Ukraine'),\
+        ( '256', 'Uganda'),\
+        ( '1', 'United States'),\
+        ( '598', 'Uruguay'),\
+        ( '998', 'Uzbekistan'),\
+        ( '39', 'Vatican'),\
+        ( '1', 'Saint Vincent And The Grenadines'),\
+        ( '58', 'Venezuela'),\
+        ( '1', 'British Virgin Islands'),\
+        ( '1', 'U.S. Virgin Islands'),\
+        ( '84', 'Vietnam'),\
+        ( '678', 'Vanuatu'),\
+        ( '681', 'Wallis And Futuna'),\
+        ( '685', 'Samoa'),\
+        ( '383', 'Kosovo'),\
+        ( '967', 'Yemen'),\
+        ( '262', 'Mayotte'),\
+        ( '27', 'South Africa'),\
+        ( '260', 'Zambia'),\
+        ( '263', 'Zimbabwe');}
